@@ -1,0 +1,554 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import {
+  supportedLangs,
+  siteContent,
+  getLangFromParams,
+  buildNav,
+  buildFooter,
+} from "../../data/site";
+
+export function getStaticPaths() {
+  return supportedLangs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromParams(Astro.params.lang);
+const t = siteContent[lang];
+
+const copy = {
+  en: {
+    title: "Videos",
+    subtitle: "All videos organised by category. Click a thumbnail to load it in the player.",
+    subscribeTitle: "Subscribe to the Channel",
+    subscribeText: "New videos regularly — don't miss anything about the People's Republic of Bulgaria.",
+    subscribeBtn: "Subscribe on YouTube",
+    more: "More videos from this category",
+    watch: "Watch on YouTube",
+    playlist: "Full Playlist",
+    urbexTitle: "Urbex — Abandoned Communist Bulgaria",
+    urbexText: "Exploring forgotten buildings, military bases and ghost sites from the communist era.",
+    vlogTitle: "Vlog — Life in Sofia & Bulgarian Adventures",
+    vlogText: "Day-to-day life, markets, discoveries and adventures in Bulgaria.",
+    editTitle: "Edit — Cinematic Communist Bulgaria",
+    editText: "Atmospheric edits with archive footage, music and cold war atmosphere.",
+    unboxingTitle: "Unboxing — Communist Era Objects",
+    unboxingText: "Flea market finds, rare military items, propaganda objects — detailed unboxings of historical artefacts.",
+    presentationTitle: "Presentation — Detailed Object Reviews",
+    presentationText: "In-depth presentations of medals, uniforms, badges, documents — with historical context.",
+    tourismTitle: "Tourism — Communist Heritage Sites",
+    tourismText: "Guided visits to monuments, museums and communist-era sites across Bulgaria.",
+  },
+  fr: {
+    title: "Vidéos",
+    subtitle: "Toutes les vidéos classées par catégorie. Cliquez sur une miniature pour la charger dans le lecteur.",
+    subscribeTitle: "S’abonner à la chaîne",
+    subscribeText: "De nouvelles vidéos régulièrement — ne manquez rien sur la République populaire de Bulgarie.",
+    subscribeBtn: "S’abonner sur YouTube",
+    more: "Plus de vidéos de cette catégorie",
+    watch: "Voir sur YouTube",
+    playlist: "Playlist complète",
+    urbexTitle: "Urbex — Bulgarie communiste abandonnée",
+    urbexText: "Exploration de bâtiments oubliés, bases militaires et lieux fantômes de l’époque communiste.",
+    vlogTitle: "Vlog — Vie à Sofia et aventures en Bulgarie",
+    vlogText: "Vie quotidienne, marchés, découvertes et aventures en Bulgarie.",
+    editTitle: "Edit — Bulgarie communiste cinématique",
+    editText: "Montages d’ambiance avec archives, musique et atmosphère guerre froide.",
+    unboxingTitle: "Unboxing — Objets de l’époque communiste",
+    unboxingText: "Trouvailles de brocante, objets militaires rares, propagande — déballages détaillés d’artefacts historiques.",
+    presentationTitle: "Présentation — Objets en détail",
+    presentationText: "Présentations détaillées de médailles, uniformes, insignes, documents — avec contexte historique.",
+    tourismTitle: "Tourisme — Sites patrimoniaux communistes",
+    tourismText: "Visites guidées de monuments, musées et sites de l’époque communiste à travers la Bulgarie.",
+  },
+  es: {
+    title: "Vídeos",
+    subtitle: "Todos los vídeos organizados por categoría. Haz clic en una miniatura para cargarla en el reproductor.",
+    subscribeTitle: "Suscribirse al canal",
+    subscribeText: "Nuevos vídeos regularmente — no te pierdas nada sobre la República Popular de Bulgaria.",
+    subscribeBtn: "Suscribirse en YouTube",
+    more: "Más vídeos de esta categoría",
+    watch: "Ver en YouTube",
+    playlist: "Lista completa",
+    urbexTitle: "Urbex — Bulgaria comunista abandonada",
+    urbexText: "Explorando edificios olvidados, bases militares y lugares fantasma de la era comunista.",
+    vlogTitle: "Vlog — Vida en Sofía y aventuras en Bulgaria",
+    vlogText: "Vida cotidiana, mercados, descubrimientos y aventuras en Bulgaria.",
+    editTitle: "Edit — Bulgaria comunista cinematográfica",
+    editText: "Edits atmosféricos con archivo, música y ambiente de Guerra Fría.",
+    unboxingTitle: "Unboxing — Objetos de la era comunista",
+    unboxingText: "Hallazgos de mercadillo, objetos militares raros, propaganda — unboxings detallados de artefactos históricos.",
+    presentationTitle: "Presentación — Reseñas detalladas de objetos",
+    presentationText: "Presentaciones detalladas de medallas, uniformes, insignias y documentos — con contexto histórico.",
+    tourismTitle: "Turismo — Lugares patrimoniales comunistas",
+    tourismText: "Visitas guiadas a monumentos, museos y lugares de la época comunista en Bulgaria.",
+  },
+  bg: {
+    title: "Видеа",
+    subtitle: "Всички видеа са организирани по категории. Натиснете върху миниатюра, за да я заредите в плеъра.",
+    subscribeTitle: "Абонирай се за канала",
+    subscribeText: "Нови видеа редовно — не пропускайте нищо за Народна република България.",
+    subscribeBtn: "Абонирай се в YouTube",
+    more: "Още видеа от тази категория",
+    watch: "Гледай в YouTube",
+    playlist: "Цял плейлист",
+    urbexTitle: "Urbex — Изоставена комунистическа България",
+    urbexText: "Изследване на забравени сгради, военни бази и призрачни места от комунистическата епоха.",
+    vlogTitle: "Влог — Живот в София и приключения в България",
+    vlogText: "Всекидневие, пазари, открития и приключения в България.",
+    editTitle: "Edit — Кинематографична комунистическа България",
+    editText: "Атмосферни видеомонтажи с архивни кадри, музика и дух на Студената война.",
+    unboxingTitle: "Unboxing — Предмети от комунистическата епоха",
+    unboxingText: "Находки от битпазари, редки военни предмети, пропаганда — детайлни представяния на исторически артефакти.",
+    presentationTitle: "Представяне — Подробни ревюта на предмети",
+    presentationText: "Подробни представяния на медали, униформи, значки и документи — с исторически контекст.",
+    tourismTitle: "Туризъм — Комунистически исторически обекти",
+    tourismText: "Обиколки на паметници, музеи и обекти от комунистическата епоха в България.",
+  },
+}[lang];
+
+const categories = [
+  {
+    key: "urbex",
+    icon: "🏚️",
+    videoId: "1_NIQaF0eNA",
+    playlist: "PL8myqsdqvY4WxorKrf3O8rb-w2RDptXy",
+    title: copy.urbexTitle,
+    text: copy.urbexText,
+    thumbs: [
+      { label: "Abandoned Communist Bulgaria", sub: "Urbex", type: "video", videoId: "1_NIQaF0eNA" },
+      { label: "More Urbex Videos", sub: "View full playlist →", type: "playlist" },
+      { label: "Urbex Playlist", sub: "All urbex content →", type: "playlist" },
+    ],
+  },
+  {
+    key: "vlog",
+    icon: "🎥",
+    videoId: "2vimA3g5Bz4",
+    playlist: "PL8myqsdqvY4WgLONNTYI9F6a7oT1r_VZW",
+    title: copy.vlogTitle,
+    text: copy.vlogText,
+    thumbs: [
+      { label: "Vlog — Bulgarian Life", sub: "Daily adventures", type: "video", videoId: "2vimA3g5Bz4" },
+      { label: "More Vlogs", sub: "View full playlist →", type: "playlist" },
+      { label: "Vlog Playlist", sub: "All vlog content →", type: "playlist" },
+    ],
+  },
+  {
+    key: "edit",
+    icon: "🎬",
+    videoId: "YVyUkLyBIU0",
+    playlist: "PL8myqsdqvY4UZ1RGZ2DzEhKyR-BAmj1ve",
+    title: copy.editTitle,
+    text: copy.editText,
+    thumbs: [
+      { label: "Cinematic Edit", sub: "Communist aesthetic", type: "video", videoId: "YVyUkLyBIU0" },
+      { label: "More Edits", sub: "View full playlist →", type: "playlist" },
+      { label: "Edit Playlist", sub: "All edit content →", type: "playlist" },
+    ],
+  },
+  {
+    key: "unboxing",
+    icon: "📦",
+    videoId: "lsd0rxMMKng",
+    playlist: "PL8myqsdqvY4UW0pILiMihzG-8f-_EfIhA",
+    title: copy.unboxingTitle,
+    text: copy.unboxingText,
+    thumbs: [
+      { label: "Object Unboxing", sub: "Historical artefacts", type: "video", videoId: "lsd0rxMMKng" },
+      { label: "More Unboxings", sub: "View full playlist →", type: "playlist" },
+      { label: "Unboxing Playlist", sub: "All unboxing content →", type: "playlist" },
+    ],
+  },
+  {
+    key: "presentation",
+    icon: "🎖️",
+    videoId: "dZ6oXWKSXC8",
+    playlist: "PL8myqsdqvY4U30o50QqrKxa1RoMyH6iuH",
+    title: copy.presentationTitle,
+    text: copy.presentationText,
+    thumbs: [
+      { label: "Object Presentation", sub: "Historical details", type: "video", videoId: "dZ6oXWKSXC8" },
+      { label: "More Presentations", sub: "View full playlist →", type: "playlist" },
+      { label: "Presentation Playlist", sub: "All presentation content →", type: "playlist" },
+    ],
+  },
+  {
+    key: "tourism",
+    icon: "🗺️",
+    videoId: "qbnBOUo_GWQ",
+    playlist: "PL8myqsdqvY4Xb8K0Y9WqlsN9qQA9OiX8D",
+    title: copy.tourismTitle,
+    text: copy.tourismText,
+    thumbs: [
+      { label: "Communist Heritage Tour", sub: "Bulgaria history sites", type: "video", videoId: "qbnBOUo_GWQ" },
+      { label: "More Tourism Videos", sub: "View full playlist →", type: "playlist" },
+      { label: "Tourism Playlist", sub: "All tourism content →", type: "playlist" },
+    ],
+  },
+];
+---
+
+<MainLayout
+  lang={lang}
+  title={`${copy.title} | People's Republic of Bulgaria`}
+  description={t.home.description}
+  nav={buildNav(lang, t)}
+  footer={buildFooter(lang, t)}
+  active="videos"
+  heroImage="/home/BackGroundHome.jpg"
+>
+
+<style>
+.page-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.page-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #f0ebe0;
+  border-bottom: 3px solid #D62612;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  font-size: 1.45rem;
+  color: #888;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  padding: 9px 20px;
+  background: #242424;
+  border: 1px solid #333;
+  color: #aaa;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.tab-btn:hover {
+  background: #2e2e2e;
+  color: #f0ebe0;
+}
+
+.tab-btn.active {
+  background: #D62612;
+  border-color: #D62612;
+  color: #fff;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.player-box {
+  background: #242424;
+  border: 1px solid #333;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.player-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  background: #000;
+  margin-bottom: 14px;
+}
+
+.player-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.player-meta h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f0ebe0;
+  margin-bottom: 6px;
+}
+
+.player-meta p {
+  font-size: 1.4rem;
+  color: #888;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.player-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-red {
+  display: inline-block;
+  padding: 8px 18px;
+  background: #D62612;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.btn-red:hover { background: #9B1B0C; }
+
+.btn-outline {
+  display: inline-block;
+  padding: 8px 18px;
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #555;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.btn-outline:hover {
+  color: #f0ebe0;
+  border-color: #888;
+}
+
+.section-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #888;
+  border-bottom: 1px solid #333;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+
+.thumb-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.thumb-card {
+  background: #242424;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+.thumb-card:hover { border-color: #D62612; }
+
+.thumb-img {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #111;
+  overflow: hidden;
+}
+
+.thumb-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2rem;
+}
+
+.thumb-body { padding: 10px 12px; }
+
+.thumb-body h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.5rem;
+  color: #f0ebe0;
+  margin-bottom: 3px;
+}
+
+.thumb-body p {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+.subscribe-box {
+  background: #D62612;
+  padding: 24px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.subscribe-box h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.subscribe-box p {
+  font-size: 1.4rem;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 16px;
+}
+
+.btn-white {
+  display: inline-block;
+  padding: 10px 26px;
+  background: #fff;
+  color: #D62612;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.btn-white:hover { background: #f0ebe0; }
+
+@media (max-width: 700px) {
+  .thumb-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .thumb-grid { grid-template-columns: 1fr; }
+  .player-links { flex-direction: column; }
+}
+</style>
+
+<div class="page-wrap">
+  <h1 class="page-title">{copy.title}</h1>
+  <p class="page-subtitle">{copy.subtitle}</p>
+
+  <div class="tabs">
+    {categories.map((cat, index) => (
+      <button class={`tab-btn ${index === 0 ? "active" : ""}`} data-tab={cat.key}>
+        {cat.icon} {cat.key}
+      </button>
+    ))}
+  </div>
+
+  {categories.map((cat, index) => (
+    <div class={`tab-panel ${index === 0 ? "active" : ""}`} id={`tab-${cat.key}`}>
+      <div class="player-box">
+        <div class="player-embed">
+          <iframe
+            id={`iframe-${cat.key}`}
+            src={`https://www.youtube.com/embed/${cat.videoId}?rel=0`}
+            title={cat.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="player-meta">
+          <h3>{cat.title}</h3>
+          <p>{cat.text}</p>
+          <div class="player-links">
+            <a href={`https://www.youtube.com/watch?v=${cat.videoId}`} target="_blank" class="btn-red">
+              ▶ {copy.watch}
+            </a>
+            <a href={`https://www.youtube.com/playlist?list=${cat.playlist}`} target="_blank" class="btn-outline">
+              ☰ {copy.playlist}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-label">{copy.more}</p>
+
+      <div class="thumb-grid">
+        {cat.thumbs.map((thumb) => (
+          <div
+            class="thumb-card"
+            data-type={thumb.type}
+            data-tab={cat.key}
+            data-videoid={thumb.videoId || ""}
+            data-playlist={cat.playlist}
+          >
+            <div class="thumb-img">
+              {thumb.type === "video" ? (
+                <img src={`https://img.youtube.com/vi/${thumb.videoId}/mqdefault.jpg`} alt={thumb.label} />
+              ) : (
+                <div class="thumb-placeholder">{cat.icon}</div>
+              )}
+            </div>
+            <div class="thumb-body">
+              <h4>{thumb.label}</h4>
+              <p>{thumb.sub}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+
+  <div class="subscribe-box">
+    <h3>{copy.subscribeTitle}</h3>
+    <p>{copy.subscribeText}</p>
+    <a
+      href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505"
+      target="_blank"
+      class="btn-white"
+    >
+      ▶ {copy.subscribeBtn}
+    </a>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab)?.classList.add('active');
+    });
+  });
+
+  function play(tab, videoId) {
+    const iframe = document.getElementById('iframe-' + tab);
+    if (!iframe) return;
+    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
+    document.getElementById('tab-' + tab)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.thumb-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const type = card.dataset.type;
+      const tab = card.dataset.tab;
+      const videoId = card.dataset.videoid;
+      const playlist = card.dataset.playlist;
+
+      if (type === 'video' && videoId) {
+        play(tab, videoId);
+      } else if (playlist) {
+        window.open('https://www.youtube.com/playlist?list=' + playlist, '_blank');
+      }
+    });
+  });
+</script>
+
+</MainLayout>

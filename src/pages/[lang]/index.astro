@@ -1,0 +1,273 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import {
+  supportedLangs,
+  siteContent,
+  getLangFromParams,
+  buildNav,
+  buildFooter,
+} from "../../data/site";
+
+export function getStaticPaths() {
+  return supportedLangs.map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromParams(Astro.params.lang);
+const t = siteContent[lang];
+---
+
+<MainLayout
+  lang={lang}
+  title={t.home.title}
+  description={t.home.description}
+  nav={buildNav(lang, t)}
+  footer={buildFooter(lang, t)}
+  active="home"
+  heroImage="/home/BackGroundHome.jpg"
+>
+
+<style>
+.page-wrap { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+
+.welcome-box {
+  background: #242424;
+  border-left: 4px solid #D62612;
+  padding: 20px 24px;
+  margin-bottom: 30px;
+}
+
+.welcome-box h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #f0ebe0;
+  margin-bottom: 10px;
+}
+
+.welcome-box p {
+  font-size: 1.5rem;
+  color: #aaa;
+  line-height: 1.8;
+}
+
+.notice {
+  font-size: 1.35rem;
+  color: #888;
+  font-style: italic;
+  border-top: 1px solid #333;
+  padding-top: 12px;
+  margin-top: 14px;
+}
+
+.section-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #D62612;
+  border-bottom: 2px solid #333;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.home-card {
+  background: #242424;
+  border: 1px solid #333;
+  overflow: hidden;
+}
+
+.home-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.home-card-body { padding: 14px 16px; }
+
+.home-card-body h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #f0ebe0;
+  margin-bottom: 6px;
+}
+
+.home-card-body p {
+  font-size: 1.35rem;
+  color: #888;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.btn-red {
+  display: inline-block;
+  padding: 8px 18px;
+  background: #D62612;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-red:hover { background: #9B1B0C; }
+
+.video-wrap {
+  margin-bottom: 30px;
+  background: #242424;
+  border: 1px solid #333;
+  padding: 18px;
+}
+
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  background: #000;
+}
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-link {
+  display: block;
+  text-align: right;
+  margin-top: 10px;
+  font-size: 1.35rem;
+  color: #D62612;
+}
+
+.video-link:hover { text-decoration: underline; }
+
+.insta-box {
+  background: #242424;
+  border: 1px solid #333;
+  padding: 18px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.insta-box p {
+  font-size: 1.45rem;
+  color: #aaa;
+  margin-bottom: 14px;
+}
+
+.insta-box .handle {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.8rem;
+  color: #D62612;
+  display: block;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 700px) {
+  .home-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="welcome-box">
+  <h2>{t.home.welcomeTitle}</h2>
+  <p>{t.home.welcomeText}</p>
+  <p class="notice">
+    This website has been created for cultural and historical purposes only.
+  </p>
+</div>
+
+<h2 class="section-title">Explore</h2>
+
+<div class="home-grid">
+
+<a href={`/${lang}/history`} class="home-card">
+<img src="/home/History.jpg" alt="History" />
+<div class="home-card-body">
+<h3>History</h3>
+<p>Timeline of key events from 1944 to 1990.</p>
+<span class="btn-red">Discover</span>
+</div>
+</a>
+
+<a href={`/${lang}/collection`} class="home-card">
+<img src="/home/Collection.jpg" alt="Collection" />
+<div class="home-card-body">
+<h3>Collection</h3>
+<p>Objects, medals, uniforms and artefacts.</p>
+<span class="btn-red">Discover</span>
+</div>
+</a>
+
+<a href={`/${lang}/tourism`} class="home-card">
+<img src="/home/Tourism.webp" alt="Tourism" />
+<div class="home-card-body">
+<h3>Tourism</h3>
+<p>Sites to visit in Bulgaria — guided tours available.</p>
+<span class="btn-red">Discover</span>
+</div>
+</a>
+
+<a href={`/${lang}/videos`} class="home-card">
+<img src="/home/background_videos.jpg" alt="Videos" />
+<div class="home-card-body">
+<h3>Videos</h3>
+<p>Urbex, vlogs, edits and presentations.</p>
+<span class="btn-red">Discover</span>
+</div>
+</a>
+
+</div>
+
+<div class="video-wrap">
+<h2 class="section-title">▶ Latest Video</h2>
+
+<div class="video-embed">
+<iframe
+src="https://www.youtube.com/embed/qbnBOUo_GWQ?rel=0"
+allowfullscreen>
+</iframe>
+</div>
+
+<a class="video-link" href={`/${lang}/videos`}>
+→ See all videos
+</a>
+</div>
+
+<div class="insta-box">
+<h2 class="section-title" style="text-align:center;border-bottom:none;margin-bottom:12px;">
+Instagram
+</h2>
+
+<span class="handle">@peoplesrepublicofbulgaria</span>
+
+<p>
+Follow us on Instagram for regular photos of the collection,
+urbex spots and life in Bulgaria.
+</p>
+
+<a
+href="https://www.instagram.com/peoplesrepublicofbulgaria/"
+target="_blank"
+class="btn-red"
+>
+Follow on Instagram
+</a>
+
+</div>
+
+</MainLayout>
