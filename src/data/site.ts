@@ -17,11 +17,11 @@ export const siteContent = {
       copyright: "© 2024 People's Republic of Bulgaria — All rights reserved",
     },
     home: {
-      title: "People's Republic of Bulgaria",
-      description: "The first multilingual website dedicated to the history of the People's Republic of Bulgaria.",
+      title: "People's Republic of Bulgaria — History, Collection & Cold War Bulgaria",
+      description: "The first multilingual website dedicated to the history of the People's Republic of Bulgaria (1944–1990). Explore history, militaria, urbex, and Cold War Bulgaria.",
       welcomeTitle: "Welcome",
       welcomeText: "Welcome to the first multilingual website fully dedicated to the history of the People's Republic of Bulgaria.",
-      tagline: "Welcome to People's Republic of Bulgaria! This website explores Communist Bulgaria (1944–1990) through history, militaria, collection, urbex, edits, and Cold War vibes.",
+      tagline: "Welcome to People's Republic of Bulgaria! This website explores Communist Bulgaria (1944–1990) through history, militaria, collections, urbex, edits, and Cold War vibes.",
       notice: "This website has been created for cultural and historical purposes only.",
       explore: "Explore",
       latestVideo: "▶ Latest Video",
@@ -39,11 +39,32 @@ export const siteContent = {
       },
     },
     about: {
-      title: "About | People's Republic of Bulgaria",
-      pageTitle: "About",
-      whoTitle: "Who am I?",
-      whoText1: "I have been living in Sofia, Bulgaria for a few years now, and I have been passionate about history since I was a child.",
-      whoText2: "A big fan of flea markets, I started collecting historical objects at the age of 12.",
+      title: "About — People's Republic of Bulgaria",
+      description: "Learn about the creator of this site — a French history enthusiast living in Sofia, Bulgaria, passionate about the communist era and Cold War history.",
+    },
+    history: {
+      title: "History of Communist Bulgaria (1944–1990) — People's Republic of Bulgaria",
+      description: "Complete timeline of the People's Republic of Bulgaria from the 1944 coup to the fall of communism in 1990. Key events, leaders, and milestones.",
+    },
+    collection: {
+      title: "Collection — Communist Bulgaria Militaria, Medals & Uniforms",
+      description: "Photo gallery of a private collection of objects from the People's Republic of Bulgaria — medals, military uniforms, badges, documents and Cold War artefacts.",
+    },
+    tourism: {
+      title: "Visit Communist Bulgaria — Tourism & Guided Tours",
+      description: "Discover the communist heritage sites of Bulgaria. Abandoned monuments, Cold War bunkers, and historic locations — guided tours available in Sofia and beyond.",
+    },
+    videos: {
+      title: "Videos — Urbex, Vlogs & Communist Bulgaria",
+      description: "Watch urbex explorations, vlogs and documentary edits about communist Bulgaria, abandoned Cold War sites, and the history of the People's Republic of Bulgaria.",
+    },
+    contact: {
+      title: "Contact — People's Republic of Bulgaria",
+      description: "Get in touch with the team behind People's Republic of Bulgaria. Questions about the collection, guided tours, or collaborations.",
+    },
+    legal: {
+      title: "Legal Notice — People's Republic of Bulgaria",
+      description: "Legal notice and terms of use for the People's Republic of Bulgaria website.",
     },
   },
 
@@ -62,11 +83,11 @@ export const siteContent = {
       copyright: "© 2024 People's Republic of Bulgaria — Tous droits réservés",
     },
     home: {
-      title: "People's Republic of Bulgaria",
-      description: "Le premier site multilingue dédié à l'histoire de la République populaire de Bulgarie.",
+      title: "République Populaire de Bulgarie — Histoire, Collection & Guerre Froide",
+      description: "Le premier site multilingue dédié à l'histoire de la République populaire de Bulgarie (1944–1990). Histoire, militaria, urbex et Bulgarie communiste.",
       welcomeTitle: "Bienvenue",
       welcomeText: "Bienvenue sur le premier site multilingue entièrement dédié à l'histoire de la République populaire de Bulgarie.",
-      tagline: "Bienvenue sur People's Republic of Bulgaria ! Ce site explore la Bulgarie communiste (1944–1990) à travers l'histoire, la militaria, la collection, l'urbex, le montage video et l'ambiance Guerre froide.",
+      tagline: "Bienvenue sur People's Republic of Bulgaria ! Ce site explore la Bulgarie communiste (1944–1990) à travers l'histoire, la militaria, les collections, l'urbex, les montages et l'ambiance Guerre froide.",
       notice: "Ce site a été créé à des fins culturelles et historiques uniquement.",
       explore: "Explorer",
       latestVideo: "▶ Dernière vidéo",
@@ -84,11 +105,32 @@ export const siteContent = {
       },
     },
     about: {
-      title: "À propos | People's Republic of Bulgaria",
-      pageTitle: "À propos",
-      whoTitle: "Qui suis-je ?",
-      whoText1: "Je vis à Sofia, en Bulgarie, depuis quelques années et je suis passionné d'histoire depuis l'enfance.",
-      whoText2: "Grand amateur de brocantes, j'ai commencé à collectionner des objets historiques à l'âge de 12 ans.",
+      title: "À propos — République Populaire de Bulgarie",
+      description: "Découvrez qui se cache derrière ce site — un passionné d'histoire français vivant à Sofia, spécialisé dans l'ère communiste et la Guerre froide en Bulgarie.",
+    },
+    history: {
+      title: "Histoire de la Bulgarie communiste (1944–1990) — République Populaire de Bulgarie",
+      description: "Chronologie complète de la République populaire de Bulgarie, du coup d'état de 1944 à la chute du communisme en 1990. Événements clés, dirigeants et jalons historiques.",
+    },
+    collection: {
+      title: "Collection — Militaria, Médailles et Uniformes de Bulgarie communiste",
+      description: "Galerie photo d'une collection privée d'objets de la République populaire de Bulgarie — médailles, uniformes militaires, insignes, documents et artefacts Guerre froide.",
+    },
+    tourism: {
+      title: "Visiter la Bulgarie communiste — Tourisme et visites guidées",
+      description: "Découvrez les sites du patrimoine communiste en Bulgarie. Monuments abandonnés, bunkers de la Guerre froide et lieux historiques — visites guidées disponibles.",
+    },
+    videos: {
+      title: "Vidéos — Urbex, Vlogs & Bulgarie communiste",
+      description: "Explorations urbex, vlogs et montages documentaires sur la Bulgarie communiste, les sites abandonnés de la Guerre froide et l'histoire de la République populaire de Bulgarie.",
+    },
+    contact: {
+      title: "Contact — République Populaire de Bulgarie",
+      description: "Contactez l'équipe de People's Republic of Bulgaria. Questions sur la collection, les visites guidées ou les collaborations.",
+    },
+    legal: {
+      title: "Mentions légales — République Populaire de Bulgarie",
+      description: "Mentions légales et conditions d'utilisation du site People's Republic of Bulgaria.",
     },
   },
 
@@ -107,11 +149,11 @@ export const siteContent = {
       copyright: "© 2024 People's Republic of Bulgaria — Todos los derechos reservados",
     },
     home: {
-      title: "People's Republic of Bulgaria",
-      description: "El primer sitio multilingüe dedicado a la historia de la República Popular de Bulgaria.",
+      title: "República Popular de Bulgaria — Historia, Colección y Guerra Fría",
+      description: "El primer sitio multilingüe dedicado a la historia de la República Popular de Bulgaria (1944–1990). Historia, militaria, urbex y Bulgaria comunista.",
       welcomeTitle: "Bienvenido",
       welcomeText: "Bienvenido al primer sitio multilingüe dedicado por completo a la historia de la República Popular de Bulgaria.",
-      tagline: "Bienvenido a People's Republic of Bulgaria! Este sitio explora la Bulgaria comunista (1944–1990) a través de la historia, la militaria, la coleccion, el urbex, el montaje video y el ambiente de la Guerra Fría.",
+      tagline: "Bienvenido a People's Republic of Bulgaria! Este sitio explora la Bulgaria comunista (1944–1990) a través de la historia, la militaria, las colecciones, el urbex, los montajes y el ambiente de la Guerra Fría.",
       notice: "Este sitio ha sido creado con fines culturales e históricos únicamente.",
       explore: "Explorar",
       latestVideo: "▶ Último vídeo",
@@ -129,11 +171,32 @@ export const siteContent = {
       },
     },
     about: {
-      title: "Sobre mí | People's Republic of Bulgaria",
-      pageTitle: "Sobre mí",
-      whoTitle: "¿Quién soy?",
-      whoText1: "Vivo en Sofía, Bulgaria, desde hace algunos años y me apasiona la historia desde niño.",
-      whoText2: "Gran aficionado a los mercadillos, empecé a coleccionar objetos históricos a los 12 años.",
+      title: "Sobre mí — República Popular de Bulgaria",
+      description: "Conoce al creador de este sitio — un apasionado de la historia francés que vive en Sofía, especializado en la era comunista y la Guerra Fría en Bulgaria.",
+    },
+    history: {
+      title: "Historia de la Bulgaria comunista (1944–1990) — República Popular de Bulgaria",
+      description: "Cronología completa de la República Popular de Bulgaria, desde el golpe de estado de 1944 hasta la caída del comunismo en 1990. Eventos clave, líderes e hitos históricos.",
+    },
+    collection: {
+      title: "Colección — Militaria, Medallas y Uniformes de la Bulgaria comunista",
+      description: "Galería fotográfica de una colección privada de objetos de la República Popular de Bulgaria — medallas, uniformes militares, insignias, documentos y artefactos de la Guerra Fría.",
+    },
+    tourism: {
+      title: "Visitar la Bulgaria comunista — Turismo y visitas guiadas",
+      description: "Descubre los sitios del patrimonio comunista en Bulgaria. Monumentos abandonados, búnkeres de la Guerra Fría y lugares históricos — visitas guiadas disponibles.",
+    },
+    videos: {
+      title: "Vídeos — Urbex, Vlogs y Bulgaria comunista",
+      description: "Exploraciones urbex, vlogs y montajes documentales sobre la Bulgaria comunista, los sitios abandonados de la Guerra Fría y la historia de la República Popular de Bulgaria.",
+    },
+    contact: {
+      title: "Contacto — República Popular de Bulgaria",
+      description: "Contacta con el equipo de People's Republic of Bulgaria. Preguntas sobre la colección, visitas guiadas o colaboraciones.",
+    },
+    legal: {
+      title: "Aviso legal — República Popular de Bulgaria",
+      description: "Aviso legal y condiciones de uso del sitio web People's Republic of Bulgaria.",
     },
   },
 
@@ -152,11 +215,11 @@ export const siteContent = {
       copyright: "© 2024 People's Republic of Bulgaria — Всички права запазени",
     },
     home: {
-      title: "People's Republic of Bulgaria",
-      description: "Първият многоезичен сайт, посветен на историята на Народна република България.",
+      title: "Народна република България — История, Колекция и Студена война",
+      description: "Първият многоезичен сайт, посветен на историята на Народна република България (1944–1990). История, милитария, урбекс и комунистическа България.",
       welcomeTitle: "Добре дошли",
       welcomeText: "Добре дошли в първия многоезичен сайт, изцяло посветен на историята на Народна република България.",
-      tagline: "Добре дошли в People's Republic of Bulgaria! Този сайт изследва комунистическа България (1944–1990) чрез история, милитария, колекция, урбекс, видео монтаж и атмосферата на Студената война.",
+      tagline: "Добре дошли в People's Republic of Bulgaria! Този сайт изследва комунистическа България (1944–1990) чрез история, милитария, колекции, урбекс, монтажи и атмосферата на Студената война.",
       notice: "Този сайт е създаден единствено за културни и исторически цели.",
       explore: "Разгледайте",
       latestVideo: "▶ Последно видео",
@@ -174,11 +237,32 @@ export const siteContent = {
       },
     },
     about: {
-      title: "За мен | People's Republic of Bulgaria",
-      pageTitle: "За мен",
-      whoTitle: "Кой съм аз?",
-      whoText1: "Живея в София, България, от няколко години и се интересувам от история още от дете.",
-      whoText2: "Голям фен на битпазарите, започнах да колекционирам исторически предмети на 12 години.",
+      title: "За мен — Народна република България",
+      description: "Запознайте се със създателя на сайта — французин, страстен по история, живеещ в София и специализиран в комунистическата епоха и Студената война в България.",
+    },
+    history: {
+      title: "История на комунистическа България (1944–1990) — Народна република България",
+      description: "Пълна хронология на Народна република България от преврата през 1944 г. до падането на комунизма през 1990 г. Ключови събития, лидери и исторически моменти.",
+    },
+    collection: {
+      title: "Колекция — Милитария, Медали и Униформи от НРБ",
+      description: "Фотогалерия на частна колекция от предмети на Народна република България — медали, военни униформи, значки, документи и артефакти от Студената война.",
+    },
+    tourism: {
+      title: "Посети комунистическа България — Туризъм и екскурзии",
+      description: "Открийте комунистическото наследство на България. Изоставени паметници, бункери от Студената война и исторически места — налични екскурзии с водач.",
+    },
+    videos: {
+      title: "Видеа — Урбекс, Влогове и комунистическа България",
+      description: "Урбекс изследвания, влогове и документални монтажи за комунистическа България, изоставени обекти от Студената война и историята на Народна република България.",
+    },
+    contact: {
+      title: "Контакт — Народна република България",
+      description: "Свържете се с екипа на People's Republic of Bulgaria. Въпроси относно колекцията, екскурзиите или сътрудничеството.",
+    },
+    legal: {
+      title: "Правна информация — Народна република България",
+      description: "Правна информация и условия за ползване на уебсайта People's Republic of Bulgaria.",
     },
   },
 } as const;

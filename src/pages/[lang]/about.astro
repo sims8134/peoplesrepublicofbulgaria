@@ -18,8 +18,8 @@ const t = siteContent[lang];
 
 <MainLayout
   lang={lang}
-  title={t.about?.title || "About | People's Republic of Bulgaria"}
-  description={t.home.description}
+  title={t.about.title}
+  description={t.about.description}
   nav={buildNav(lang, t)}
   footer={buildFooter(lang, t)}
   active="about"
