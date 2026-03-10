@@ -190,53 +190,51 @@ const latestVideo = latestVideos[0] ?? null;
 <div class="welcome-box">
   <h2>{t.home.welcomeTitle}</h2>
   <p>{t.home.welcomeText}</p>
-  <p class="notice">
-    This website has been created for cultural and historical purposes only.
-  </p>
+  <p class="notice">{t.home.notice}</p>
 </div>
 
-<h2 class="section-title">Explore</h2>
+<h2 class="section-title">{t.home.explore}</h2>
 
 <div class="home-grid">
   <a href={`/${lang}/history`} class="home-card">
-    <img src="/home/History.jpg" alt="History" />
+    <img src="/home/History.jpg" alt={t.home.cards.history.title} />
     <div class="home-card-body">
-      <h3>History</h3>
-      <p>Timeline of key events from 1944 to 1990.</p>
-      <span class="btn-red">Discover</span>
+      <h3>{t.home.cards.history.title}</h3>
+      <p>{t.home.cards.history.desc}</p>
+      <span class="btn-red">{t.home.cards.history.btn}</span>
     </div>
   </a>
 
   <a href={`/${lang}/collection`} class="home-card">
-    <img src="/home/Collection.jpg" alt="Collection" />
+    <img src="/home/Collection.jpg" alt={t.home.cards.collection.title} />
     <div class="home-card-body">
-      <h3>Collection</h3>
-      <p>Objects, medals, uniforms and artefacts.</p>
-      <span class="btn-red">Discover</span>
+      <h3>{t.home.cards.collection.title}</h3>
+      <p>{t.home.cards.collection.desc}</p>
+      <span class="btn-red">{t.home.cards.collection.btn}</span>
     </div>
   </a>
 
   <a href={`/${lang}/tourism`} class="home-card">
-    <img src="/home/Tourism.webp" alt="Tourism" />
+    <img src="/home/Tourism.webp" alt={t.home.cards.tourism.title} />
     <div class="home-card-body">
-      <h3>Tourism</h3>
-      <p>Sites to visit in Bulgaria — guided tours available.</p>
-      <span class="btn-red">Discover</span>
+      <h3>{t.home.cards.tourism.title}</h3>
+      <p>{t.home.cards.tourism.desc}</p>
+      <span class="btn-red">{t.home.cards.tourism.btn}</span>
     </div>
   </a>
 
   <a href={`/${lang}/videos`} class="home-card">
-    <img src="/home/background_videos.jpg" alt="Videos" />
+    <img src="/home/background_videos.jpg" alt={t.home.cards.videos.title} />
     <div class="home-card-body">
-      <h3>Videos</h3>
-      <p>Urbex, vlogs, edits and presentations.</p>
-      <span class="btn-red">Discover</span>
+      <h3>{t.home.cards.videos.title}</h3>
+      <p>{t.home.cards.videos.desc}</p>
+      <span class="btn-red">{t.home.cards.videos.btn}</span>
     </div>
   </a>
 </div>
 
 <div class="video-wrap">
-  <h2 class="section-title">▶ Latest Video</h2>
+  <h2 class="section-title">{t.home.latestVideo}</h2>
 
   {latestVideo ? (
     <>
@@ -249,46 +247,31 @@ const latestVideo = latestVideos[0] ?? null;
         </iframe>
       </div>
 
-    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
-
-      <a
-      class="btn-red"
-      href={`https://www.youtube.com/watch?v=${latestVideo.videoId}`}
-      target="_blank">
-      ▶ Watch on YouTube
-      </a>
-
-      <a
-      class="btn-red"
-      href={`/${lang}/videos`}>
-      📺 All Videos
-      </a>
-
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+        <a class="btn-red" href={`https://www.youtube.com/watch?v=${latestVideo.videoId}`} target="_blank">
+          {t.home.watchOnYoutube}
+        </a>
+        <a class="btn-red" href={`/${lang}/videos`}>
+          {t.home.allVideos}
+        </a>
       </div>
     </>
   ) : (
-    <p style="color:#888;">No latest video found.</p>
+    <p style="color:#888;">{t.home.noVideo}</p>
   )}
 </div>
 
 <div class="insta-box">
   <h2 class="section-title" style="text-align:center;border-bottom:none;margin-bottom:12px;">
-    Instagram
+    {t.home.instagramTitle}
   </h2>
 
   <span class="handle">@peoplesrepublicofbulgaria</span>
 
-  <p>
-    Follow us on Instagram for regular photos of the collection,
-    urbex spots and life in Bulgaria.
-  </p>
+  <p>{t.home.instagramText}</p>
 
-  <a
-    href="https://www.instagram.com/peoplesrepublicofbulgaria/"
-    target="_blank"
-    class="btn-red"
-  >
-    Follow on Instagram
+  <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" class="btn-red">
+    {t.home.followOnInstagram}
   </a>
 </div>
 

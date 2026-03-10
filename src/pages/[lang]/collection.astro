@@ -77,23 +77,6 @@ const images = [
   line-height: 1.7;
 }
 
-.catalogue-box {
-  background: #242424;
-  border: 1px solid #333;
-  padding: 16px 20px;
-  margin-bottom: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.catalogue-box p {
-  font-size: 1.45rem;
-  color: #aaa;
-}
-
 .btn-red {
   display: inline-block;
   padding: 9px 20px;
@@ -262,32 +245,6 @@ const images = [
     }
   </div>
 
-  <div class="catalogue-box">
-    <p>
-      {
-        lang === "fr"
-          ? "📄 Télécharger le catalogue complet de la collection (PDF)"
-          : lang === "es"
-          ? "📄 Descargar el catálogo completo de la colección (PDF)"
-          : lang === "bg"
-          ? "📄 Изтегли пълния каталог на колекцията (PDF)"
-          : "📄 Download the full collection catalogue (PDF)"
-      }
-    </p>
-
-    <a
-      href="/[Collection Catalog] Peoples Republic Of Bulgaria 2023 - 2024.pdf"
-      target="_blank"
-      class="btn-red"
-    >
-      {
-        lang === "fr" ? "Télécharger le catalogue"
-        : lang === "es" ? "Descargar catálogo"
-        : lang === "bg" ? "Изтегли каталога"
-        : "Download Catalogue"
-      }
-    </a>
-  </div>
 
   <p class="section-label">
     {
