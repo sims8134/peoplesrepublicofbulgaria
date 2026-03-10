@@ -7,6 +7,7 @@ import {
   buildNav,
   buildFooter,
 } from "../../data/site";
+import { getPlaylistVideos } from "../../data/youtube";
 
 export function getStaticPaths() {
   return supportedLangs.map((lang) => ({ params: { lang } }));
@@ -25,18 +26,7 @@ const copy = {
     more: "More videos from this category",
     watch: "Watch on YouTube",
     playlist: "Full Playlist",
-    urbexTitle: "Urbex — Abandoned Communist Bulgaria",
-    urbexText: "Exploring forgotten buildings, military bases and ghost sites from the communist era.",
-    vlogTitle: "Vlog — Life in Sofia & Bulgarian Adventures",
-    vlogText: "Day-to-day life, markets, discoveries and adventures in Bulgaria.",
-    editTitle: "Edit — Cinematic Communist Bulgaria",
-    editText: "Atmospheric edits with archive footage, music and cold war atmosphere.",
-    unboxingTitle: "Unboxing — Communist Era Objects",
-    unboxingText: "Flea market finds, rare military items, propaganda objects — detailed unboxings of historical artefacts.",
-    presentationTitle: "Presentation — Detailed Object Reviews",
-    presentationText: "In-depth presentations of medals, uniforms, badges, documents — with historical context.",
-    tourismTitle: "Tourism — Communist Heritage Sites",
-    tourismText: "Guided visits to monuments, museums and communist-era sites across Bulgaria.",
+    empty: "No videos found in this playlist yet.",
   },
   fr: {
     title: "Vidéos",
@@ -47,18 +37,7 @@ const copy = {
     more: "Plus de vidéos de cette catégorie",
     watch: "Voir sur YouTube",
     playlist: "Playlist complète",
-    urbexTitle: "Urbex — Bulgarie communiste abandonnée",
-    urbexText: "Exploration de bâtiments oubliés, bases militaires et lieux fantômes de l’époque communiste.",
-    vlogTitle: "Vlog — Vie à Sofia et aventures en Bulgarie",
-    vlogText: "Vie quotidienne, marchés, découvertes et aventures en Bulgarie.",
-    editTitle: "Edit — Bulgarie communiste cinématique",
-    editText: "Montages d’ambiance avec archives, musique et atmosphère guerre froide.",
-    unboxingTitle: "Unboxing — Objets de l’époque communiste",
-    unboxingText: "Trouvailles de brocante, objets militaires rares, propagande — déballages détaillés d’artefacts historiques.",
-    presentationTitle: "Présentation — Objets en détail",
-    presentationText: "Présentations détaillées de médailles, uniformes, insignes, documents — avec contexte historique.",
-    tourismTitle: "Tourisme — Sites patrimoniaux communistes",
-    tourismText: "Visites guidées de monuments, musées et sites de l’époque communiste à travers la Bulgarie.",
+    empty: "Aucune vidéo trouvée dans cette playlist pour le moment.",
   },
   es: {
     title: "Vídeos",
@@ -66,21 +45,10 @@ const copy = {
     subscribeTitle: "Suscribirse al canal",
     subscribeText: "Nuevos vídeos regularmente — no te pierdas nada sobre la República Popular de Bulgaria.",
     subscribeBtn: "Suscribirse en YouTube",
-    more: "Más vídeos de esta categoría",
     watch: "Ver en YouTube",
     playlist: "Lista completa",
-    urbexTitle: "Urbex — Bulgaria comunista abandonada",
-    urbexText: "Explorando edificios olvidados, bases militares y lugares fantasma de la era comunista.",
-    vlogTitle: "Vlog — Vida en Sofía y aventuras en Bulgaria",
-    vlogText: "Vida cotidiana, mercados, descubrimientos y aventuras en Bulgaria.",
-    editTitle: "Edit — Bulgaria comunista cinematográfica",
-    editText: "Edits atmosféricos con archivo, música y ambiente de Guerra Fría.",
-    unboxingTitle: "Unboxing — Objetos de la era comunista",
-    unboxingText: "Hallazgos de mercadillo, objetos militares raros, propaganda — unboxings detallados de artefactos históricos.",
-    presentationTitle: "Presentación — Reseñas detalladas de objetos",
-    presentationText: "Presentaciones detalladas de medallas, uniformes, insignias y documentos — con contexto histórico.",
-    tourismTitle: "Turismo — Lugares patrimoniales comunistas",
-    tourismText: "Visitas guiadas a monumentos, museos y lugares de la época comunista en Bulgaria.",
+    more: "Más vídeos de esta categoría",
+    empty: "Todavía no se han encontrado vídeos en esta lista.",
   },
   bg: {
     title: "Видеа",
@@ -88,104 +56,139 @@ const copy = {
     subscribeTitle: "Абонирай се за канала",
     subscribeText: "Нови видеа редовно — не пропускайте нищо за Народна република България.",
     subscribeBtn: "Абонирай се в YouTube",
-    more: "Още видеа от тази категория",
     watch: "Гледай в YouTube",
     playlist: "Цял плейлист",
-    urbexTitle: "Urbex — Изоставена комунистическа България",
-    urbexText: "Изследване на забравени сгради, военни бази и призрачни места от комунистическата епоха.",
-    vlogTitle: "Влог — Живот в София и приключения в България",
-    vlogText: "Всекидневие, пазари, открития и приключения в България.",
-    editTitle: "Edit — Кинематографична комунистическа България",
-    editText: "Атмосферни видеомонтажи с архивни кадри, музика и дух на Студената война.",
-    unboxingTitle: "Unboxing — Предмети от комунистическата епоха",
-    unboxingText: "Находки от битпазари, редки военни предмети, пропаганда — детайлни представяния на исторически артефакти.",
-    presentationTitle: "Представяне — Подробни ревюта на предмети",
-    presentationText: "Подробни представяния на медали, униформи, значки и документи — с исторически контекст.",
-    tourismTitle: "Туризъм — Комунистически исторически обекти",
-    tourismText: "Обиколки на паметници, музеи и обекти от комунистическата епоха в България.",
+    more: "Още видеа от тази категория",
+    empty: "Все още няма намерени видеа в този плейлист.",
   },
 }[lang];
 
-const categories = [
+const playlistMap = [
   {
     key: "urbex",
     icon: "🏚️",
-    videoId: "1_NIQaF0eNA",
-    playlist: "PL8myqsdqvY4WxorKrf3O8rb-w2RDptXy",
-    title: copy.urbexTitle,
-    text: copy.urbexText,
-    thumbs: [
-      { label: "Abandoned Communist Bulgaria", sub: "Urbex", type: "video", videoId: "1_NIQaF0eNA" },
-      { label: "More Urbex Videos", sub: "View full playlist →", type: "playlist" },
-      { label: "Urbex Playlist", sub: "All urbex content →", type: "playlist" },
-    ],
+    playlistId: import.meta.env.PLAYLIST_URBEX,
+    playlistLabel: "Urbex",
+    title: {
+      en: "Urbex — Abandoned Communist Bulgaria",
+      fr: "Urbex — Bulgarie communiste abandonnée",
+      es: "Urbex — Bulgaria comunista abandonada",
+      bg: "Urbex — Изоставена комунистическа България",
+    },
+    text: {
+      en: "Exploring forgotten buildings, military bases and ghost sites from the communist era.",
+      fr: "Exploration de bâtiments oubliés, bases militaires et lieux fantômes de l’époque communiste.",
+      es: "Exploración de edificios olvidados, bases militares y lugares fantasma de la era comunista.",
+      bg: "Изследване на забравени сгради, военни бази и призрачни места от комунистическата епоха.",
+    },
   },
   {
     key: "vlog",
     icon: "🎥",
-    videoId: "2vimA3g5Bz4",
-    playlist: "PL8myqsdqvY4WgLONNTYI9F6a7oT1r_VZW",
-    title: copy.vlogTitle,
-    text: copy.vlogText,
-    thumbs: [
-      { label: "Vlog — Bulgarian Life", sub: "Daily adventures", type: "video", videoId: "2vimA3g5Bz4" },
-      { label: "More Vlogs", sub: "View full playlist →", type: "playlist" },
-      { label: "Vlog Playlist", sub: "All vlog content →", type: "playlist" },
-    ],
+    playlistId: import.meta.env.PLAYLIST_VLOG,
+    playlistLabel: "Vlog",
+    title: {
+      en: "Vlog — Life in Sofia & Bulgarian Adventures",
+      fr: "Vlog — Vie à Sofia et aventures en Bulgarie",
+      es: "Vlog — Vida en Sofía y aventuras en Bulgaria",
+      bg: "Влог — Живот в София и приключения в България",
+    },
+    text: {
+      en: "Day-to-day life, markets, discoveries and adventures in Bulgaria.",
+      fr: "Vie quotidienne, marchés, découvertes et aventures en Bulgarie.",
+      es: "Vida cotidiana, mercados, descubrimientos y aventuras en Bulgaria.",
+      bg: "Всекидневие, пазари, открития и приключения в България.",
+    },
   },
   {
     key: "edit",
     icon: "🎬",
-    videoId: "YVyUkLyBIU0",
-    playlist: "PL8myqsdqvY4UZ1RGZ2DzEhKyR-BAmj1ve",
-    title: copy.editTitle,
-    text: copy.editText,
-    thumbs: [
-      { label: "Cinematic Edit", sub: "Communist aesthetic", type: "video", videoId: "YVyUkLyBIU0" },
-      { label: "More Edits", sub: "View full playlist →", type: "playlist" },
-      { label: "Edit Playlist", sub: "All edit content →", type: "playlist" },
-    ],
+    playlistId: import.meta.env.PLAYLIST_EDIT,
+    playlistLabel: "Edit",
+    title: {
+      en: "Edit — Cinematic Communist Bulgaria",
+      fr: "Edit — Bulgarie communiste cinématique",
+      es: "Edit — Bulgaria comunista cinematográfica",
+      bg: "Edit — Кинематографична комунистическа България",
+    },
+    text: {
+      en: "Atmospheric edits with archive footage, music and cold war atmosphere.",
+      fr: "Montages d’ambiance avec archives, musique et atmosphère guerre froide.",
+      es: "Edits atmosféricos con archivos, música y ambiente de Guerra Fría.",
+      bg: "Атмосферни монтажи с архивни кадри, музика и дух на Студената война.",
+    },
   },
   {
     key: "unboxing",
     icon: "📦",
-    videoId: "lsd0rxMMKng",
-    playlist: "PL8myqsdqvY4UW0pILiMihzG-8f-_EfIhA",
-    title: copy.unboxingTitle,
-    text: copy.unboxingText,
-    thumbs: [
-      { label: "Object Unboxing", sub: "Historical artefacts", type: "video", videoId: "lsd0rxMMKng" },
-      { label: "More Unboxings", sub: "View full playlist →", type: "playlist" },
-      { label: "Unboxing Playlist", sub: "All unboxing content →", type: "playlist" },
-    ],
+    playlistId: import.meta.env.PLAYLIST_UNBOXING,
+    playlistLabel: "Unboxing",
+    title: {
+      en: "Unboxing — Communist Era Objects",
+      fr: "Unboxing — Objets de l’époque communiste",
+      es: "Unboxing — Objetos de la era comunista",
+      bg: "Unboxing — Предмети от комунистическата епоха",
+    },
+    text: {
+      en: "Flea market finds, rare military items, propaganda objects — detailed unboxings of historical artefacts.",
+      fr: "Trouvailles de brocante, objets militaires rares, propagande — déballages détaillés d’artefacts historiques.",
+      es: "Hallazgos de mercadillo, objetos militares raros, propaganda — unboxings detallados de artefactos históricos.",
+      bg: "Находки от битпазари, редки военни предмети, пропаганда — детайлни представяния на исторически артефакти.",
+    },
   },
   {
     key: "presentation",
     icon: "🎖️",
-    videoId: "dZ6oXWKSXC8",
-    playlist: "PL8myqsdqvY4U30o50QqrKxa1RoMyH6iuH",
-    title: copy.presentationTitle,
-    text: copy.presentationText,
-    thumbs: [
-      { label: "Object Presentation", sub: "Historical details", type: "video", videoId: "dZ6oXWKSXC8" },
-      { label: "More Presentations", sub: "View full playlist →", type: "playlist" },
-      { label: "Presentation Playlist", sub: "All presentation content →", type: "playlist" },
-    ],
+    playlistId: import.meta.env.PLAYLIST_PRESENTATION,
+    playlistLabel: "Presentation",
+    title: {
+      en: "Presentation — Detailed Object Reviews",
+      fr: "Présentation — Objets en détail",
+      es: "Presentación — Reseñas detalladas de objetos",
+      bg: "Представяне — Подробни ревюта на предмети",
+    },
+    text: {
+      en: "In-depth presentations of medals, uniforms, badges, documents — with historical context.",
+      fr: "Présentations détaillées de médailles, uniformes, insignes, documents — avec contexte historique.",
+      es: "Presentaciones detalladas de medallas, uniformes, insignias y documentos — con contexto histórico.",
+      bg: "Подробни представяния на медали, униформи, значки и документи — с исторически контекст.",
+    },
   },
   {
     key: "tourism",
     icon: "🗺️",
-    videoId: "qbnBOUo_GWQ",
-    playlist: "PL8myqsdqvY4Xb8K0Y9WqlsN9qQA9OiX8D",
-    title: copy.tourismTitle,
-    text: copy.tourismText,
-    thumbs: [
-      { label: "Communist Heritage Tour", sub: "Bulgaria history sites", type: "video", videoId: "qbnBOUo_GWQ" },
-      { label: "More Tourism Videos", sub: "View full playlist →", type: "playlist" },
-      { label: "Tourism Playlist", sub: "All tourism content →", type: "playlist" },
-    ],
+    playlistId: import.meta.env.PLAYLIST_TOURISM,
+    playlistLabel: "Tourism",
+    title: {
+      en: "Tourism — Communist Heritage Sites",
+      fr: "Tourisme — Sites patrimoniaux communistes",
+      es: "Turismo — Lugares patrimoniales comunistas",
+      bg: "Туризъм — Комунистически исторически обекти",
+    },
+    text: {
+      en: "Guided visits to monuments, museums and communist-era sites across Bulgaria.",
+      fr: "Visites guidées de monuments, musées et sites de l’époque communiste à travers la Bulgarie.",
+      es: "Visitas guiadas a monumentos, museos y lugares de la época comunista en Bulgaria.",
+      bg: "Обиколки на паметници, музеи и обекти от комунистическата епоха в България.",
+    },
   },
 ];
+
+const categories = await Promise.all(
+  playlistMap.map(async (cat) => {
+    const videos = cat.playlistId ? await getPlaylistVideos(cat.playlistId) : [];
+    return {
+      key: cat.key,
+      icon: cat.icon,
+      playlistId: cat.playlistId,
+      playlistLabel: cat.playlistLabel,
+      title: cat.title[lang],
+      text: cat.text[lang],
+      featured: videos[0] ?? null,
+      videos,
+    };
+  })
+);
 ---
 
 <MainLayout
@@ -254,8 +257,13 @@ const categories = [
   color: #fff;
 }
 
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
 
 .player-box {
   background: #242424;
@@ -312,7 +320,9 @@ const categories = [
   letter-spacing: 0.06em;
 }
 
-.btn-red:hover { background: #9B1B0C; }
+.btn-red:hover {
+  background: #9B1B0C;
+}
 
 .btn-outline {
   display: inline-block;
@@ -355,7 +365,9 @@ const categories = [
   cursor: pointer;
 }
 
-.thumb-card:hover { border-color: #D62612; }
+.thumb-card:hover {
+  border-color: #D62612;
+}
 
 .thumb-img {
   position: relative;
@@ -379,7 +391,9 @@ const categories = [
   font-size: 3.2rem;
 }
 
-.thumb-body { padding: 10px 12px; }
+.thumb-body {
+  padding: 10px 12px;
+}
 
 .thumb-body h4 {
   font-family: 'Oswald', sans-serif;
@@ -391,6 +405,14 @@ const categories = [
 .thumb-body p {
   font-size: 1.25rem;
   color: #666;
+}
+
+.empty-box {
+  background: #242424;
+  border: 1px solid #333;
+  padding: 24px;
+  color: #888;
+  font-size: 1.5rem;
 }
 
 .subscribe-box {
@@ -426,15 +448,24 @@ const categories = [
   text-transform: uppercase;
 }
 
-.btn-white:hover { background: #f0ebe0; }
+.btn-white:hover {
+  background: #f0ebe0;
+}
 
 @media (max-width: 700px) {
-  .thumb-grid { grid-template-columns: repeat(2, 1fr); }
+  .thumb-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
-  .thumb-grid { grid-template-columns: 1fr; }
-  .player-links { flex-direction: column; }
+  .thumb-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .player-links {
+    flex-direction: column;
+  }
 }
 </style>
 
@@ -445,63 +476,103 @@ const categories = [
   <div class="tabs">
     {categories.map((cat, index) => (
       <button class={`tab-btn ${index === 0 ? "active" : ""}`} data-tab={cat.key}>
-        {cat.icon} {cat.key}
+        {cat.icon} {cat.playlistLabel}
       </button>
     ))}
   </div>
 
   {categories.map((cat, index) => (
     <div class={`tab-panel ${index === 0 ? "active" : ""}`} id={`tab-${cat.key}`}>
-      <div class="player-box">
-        <div class="player-embed">
-          <iframe
-            id={`iframe-${cat.key}`}
-            src={`https://www.youtube.com/embed/${cat.videoId}?rel=0`}
-            title={cat.title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
-
-        <div class="player-meta">
-          <h3>{cat.title}</h3>
-          <p>{cat.text}</p>
-          <div class="player-links">
-            <a href={`https://www.youtube.com/watch?v=${cat.videoId}`} target="_blank" class="btn-red">
-              ▶ {copy.watch}
-            </a>
-            <a href={`https://www.youtube.com/playlist?list=${cat.playlist}`} target="_blank" class="btn-outline">
-              ☰ {copy.playlist}
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <p class="section-label">{copy.more}</p>
-
-      <div class="thumb-grid">
-        {cat.thumbs.map((thumb) => (
-          <div
-            class="thumb-card"
-            data-type={thumb.type}
-            data-tab={cat.key}
-            data-videoid={thumb.videoId || ""}
-            data-playlist={cat.playlist}
-          >
-            <div class="thumb-img">
-              {thumb.type === "video" ? (
-                <img src={`https://img.youtube.com/vi/${thumb.videoId}/mqdefault.jpg`} alt={thumb.label} />
-              ) : (
-                <div class="thumb-placeholder">{cat.icon}</div>
-              )}
+      {cat.featured ? (
+        <>
+          <div class="player-box">
+            <div class="player-embed">
+              <iframe
+                id={`iframe-${cat.key}`}
+                src={`https://www.youtube.com/embed/${cat.featured.videoId}?rel=0`}
+                title={cat.featured.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
             </div>
-            <div class="thumb-body">
-              <h4>{thumb.label}</h4>
-              <p>{thumb.sub}</p>
+
+            <div class="player-meta">
+              <h3>{cat.title}</h3>
+              <p>{cat.text}</p>
+              <div class="player-links">
+                <a
+                  href={`https://www.youtube.com/watch?v=${cat.featured.videoId}`}
+                  target="_blank"
+                  class="btn-red"
+                >
+                  ▶ {copy.watch}
+                </a>
+                <a
+                  href={`https://www.youtube.com/playlist?list=${cat.playlistId}`}
+                  target="_blank"
+                  class="btn-outline"
+                >
+                  ☰ {copy.playlist}
+                </a>
+              </div>
             </div>
           </div>
-        ))}
+
+          <p class="section-label">{copy.more}</p>
+
+<div class="thumb-grid">
+  {cat.videos.slice(1, 4).map((video) => (
+    <div
+      class="thumb-card"
+      data-type="video"
+      data-tab={cat.key}
+      data-videoid={video.videoId}
+    >
+      <div class="thumb-img">
+        <img src={video.thumbnail} alt={video.title} loading="lazy" />
       </div>
+      <div class="thumb-body">
+        <h4>{video.title}</h4>
+        <p>
+  {lang === "fr"
+    ? "Voir cette vidéo →"
+    : lang === "es"
+    ? "Ver este vídeo →"
+    : lang === "bg"
+    ? "Гледай това видео →"
+    : "Watch this video →"}
+</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+            <div
+              class="thumb-card"
+              data-type="playlist"
+              data-playlist={cat.playlistId}
+            >
+              <div class="thumb-img">
+                <div class="thumb-placeholder">▶</div>
+              </div>
+              <div class="thumb-body">
+                <h4>{cat.playlistLabel} Playlist</h4>
+                <p>
+                  {lang === "fr"
+                    ? "Tout le contenu →"
+                    : lang === "es"
+                    ? "Todo el contenido →"
+                    : lang === "bg"
+                    ? "Цялото съдържание →"
+                    : "All content →"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div class="empty-box">{copy.empty}</div>
+      )}
     </div>
   ))}
 

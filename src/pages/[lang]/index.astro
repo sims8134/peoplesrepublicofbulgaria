@@ -7,6 +7,7 @@ import {
   buildNav,
   buildFooter,
 } from "../../data/site";
+import { getPlaylistVideos } from "../../data/youtube";
 
 export function getStaticPaths() {
   return supportedLangs.map((lang) => ({ params: { lang } }));
@@ -14,6 +15,9 @@ export function getStaticPaths() {
 
 const lang = getLangFromParams(Astro.params.lang);
 const t = siteContent[lang];
+
+const latestVideos = await getPlaylistVideos(import.meta.env.PLAYLIST_LATEST);
+const latestVideo = latestVideos[0] ?? null;
 ---
 
 <MainLayout
@@ -194,80 +198,98 @@ const t = siteContent[lang];
 <h2 class="section-title">Explore</h2>
 
 <div class="home-grid">
+  <a href={`/${lang}/history`} class="home-card">
+    <img src="/home/History.jpg" alt="History" />
+    <div class="home-card-body">
+      <h3>History</h3>
+      <p>Timeline of key events from 1944 to 1990.</p>
+      <span class="btn-red">Discover</span>
+    </div>
+  </a>
 
-<a href={`/${lang}/history`} class="home-card">
-<img src="/home/History.jpg" alt="History" />
-<div class="home-card-body">
-<h3>History</h3>
-<p>Timeline of key events from 1944 to 1990.</p>
-<span class="btn-red">Discover</span>
-</div>
-</a>
+  <a href={`/${lang}/collection`} class="home-card">
+    <img src="/home/Collection.jpg" alt="Collection" />
+    <div class="home-card-body">
+      <h3>Collection</h3>
+      <p>Objects, medals, uniforms and artefacts.</p>
+      <span class="btn-red">Discover</span>
+    </div>
+  </a>
 
-<a href={`/${lang}/collection`} class="home-card">
-<img src="/home/Collection.jpg" alt="Collection" />
-<div class="home-card-body">
-<h3>Collection</h3>
-<p>Objects, medals, uniforms and artefacts.</p>
-<span class="btn-red">Discover</span>
-</div>
-</a>
+  <a href={`/${lang}/tourism`} class="home-card">
+    <img src="/home/Tourism.webp" alt="Tourism" />
+    <div class="home-card-body">
+      <h3>Tourism</h3>
+      <p>Sites to visit in Bulgaria — guided tours available.</p>
+      <span class="btn-red">Discover</span>
+    </div>
+  </a>
 
-<a href={`/${lang}/tourism`} class="home-card">
-<img src="/home/Tourism.webp" alt="Tourism" />
-<div class="home-card-body">
-<h3>Tourism</h3>
-<p>Sites to visit in Bulgaria — guided tours available.</p>
-<span class="btn-red">Discover</span>
-</div>
-</a>
-
-<a href={`/${lang}/videos`} class="home-card">
-<img src="/home/background_videos.jpg" alt="Videos" />
-<div class="home-card-body">
-<h3>Videos</h3>
-<p>Urbex, vlogs, edits and presentations.</p>
-<span class="btn-red">Discover</span>
-</div>
-</a>
-
+  <a href={`/${lang}/videos`} class="home-card">
+    <img src="/home/background_videos.jpg" alt="Videos" />
+    <div class="home-card-body">
+      <h3>Videos</h3>
+      <p>Urbex, vlogs, edits and presentations.</p>
+      <span class="btn-red">Discover</span>
+    </div>
+  </a>
 </div>
 
 <div class="video-wrap">
-<h2 class="section-title">▶ Latest Video</h2>
+  <h2 class="section-title">▶ Latest Video</h2>
 
-<div class="video-embed">
-<iframe
-src="https://www.youtube.com/embed/qbnBOUo_GWQ?rel=0"
-allowfullscreen>
-</iframe>
-</div>
+  {latestVideo ? (
+    <>
+      <div class="video-embed">
+        <iframe
+          src={`https://www.youtube.com/embed/${latestVideo.videoId}?rel=0`}
+          title={latestVideo.title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
 
-<a class="video-link" href={`/${lang}/videos`}>
-→ See all videos
-</a>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
+
+      <a
+      class="btn-red"
+      href={`https://www.youtube.com/watch?v=${latestVideo.videoId}`}
+      target="_blank">
+      ▶ Watch on YouTube
+      </a>
+
+      <a
+      class="btn-red"
+      href={`/${lang}/videos`}>
+      📺 All Videos
+      </a>
+
+      </div>
+    </>
+  ) : (
+    <p style="color:#888;">No latest video found.</p>
+  )}
 </div>
 
 <div class="insta-box">
-<h2 class="section-title" style="text-align:center;border-bottom:none;margin-bottom:12px;">
-Instagram
-</h2>
+  <h2 class="section-title" style="text-align:center;border-bottom:none;margin-bottom:12px;">
+    Instagram
+  </h2>
 
-<span class="handle">@peoplesrepublicofbulgaria</span>
+  <span class="handle">@peoplesrepublicofbulgaria</span>
 
-<p>
-Follow us on Instagram for regular photos of the collection,
-urbex spots and life in Bulgaria.
-</p>
+  <p>
+    Follow us on Instagram for regular photos of the collection,
+    urbex spots and life in Bulgaria.
+  </p>
 
-<a
-href="https://www.instagram.com/peoplesrepublicofbulgaria/"
-target="_blank"
-class="btn-red"
->
-Follow on Instagram
-</a>
-
+  <a
+    href="https://www.instagram.com/peoplesrepublicofbulgaria/"
+    target="_blank"
+    class="btn-red"
+  >
+    Follow on Instagram
+  </a>
 </div>
 
 </MainLayout>
