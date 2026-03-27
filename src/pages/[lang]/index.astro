@@ -167,7 +167,66 @@ const latestVideo = latestVideos[0] ?? null;
   margin-bottom: 30px;
   text-align: center;
 }
+.newsletter-box {
+  background: #242424;
+  border: 1px solid #333;
+  padding: 24px;
+  margin-bottom: 30px;
+}
 
+.newsletter-text {
+  font-size: 1.45rem;
+  color: #aaa;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.newsletter-form {
+    display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.newsletter-form input[type="email"] {
+  width: 100%;
+  max-width: 400px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  color: #f0ebe0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  padding: 10px 14px;
+  outline: none;
+}
+
+.newsletter-form input[type="email"]:focus {
+  border-color: #D62612;
+}
+.newsletter-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: #aaa;
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+.newsletter-consent input {
+  margin-top: 2px;
+  flex: 0 0 auto;
+}
+@media (max-width: 560px) {
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-form .btn-red {
+    width: 100%;
+    text-align: center;
+  }
+}
 .insta-box p {
   font-size: 1.45rem;
   color: #aaa;
@@ -248,7 +307,7 @@ const latestVideo = latestVideos[0] ?? null;
       </div>
 
       <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;">
-        <a class="btn-red" href={`https://www.youtube.com/watch?v=${latestVideo.videoId}`} target="_blank">
+        <a class="btn-red" href={`https://www.youtube.com/watch?v=${latestVideo.videoId}`} target="_blank" rel="noopener noreferrer">
           {t.home.watchOnYoutube}
         </a>
         <a class="btn-red" href={`/${lang}/videos`}>
@@ -260,7 +319,33 @@ const latestVideo = latestVideos[0] ?? null;
     <p style="color:#888;">{t.home.noVideo}</p>
   )}
 </div>
+<div class="newsletter-box">
+  <h2 class="section-title">Newsletter</h2>
+  <p class="newsletter-text">
+    Subscribe to receive new videos, historical updates, archive discoveries and project news.
+  </p>
 
+ <form id="newsletter-form" action="/api/newsletter" method="POST" class="newsletter-form">
+  <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off" />
+  
+  <input
+    type="email"
+    name="email"
+    id="newsletter-email"
+    placeholder="Enter your email"
+    required
+  />
+
+  <label class="newsletter-consent">
+    <input type="checkbox" id="newsletter-consent" name="consent" required />
+    I agree to receive the People's Republic of Bulgaria newsletter by email and I have read the privacy policy.
+  </label>
+
+  <button type="submit" class="btn-red">Subscribe</button>
+</form>
+
+  <div id="newsletter-feedback" class="form-feedback"></div>
+</div>
 <div class="insta-box">
   <h2 class="section-title" style="text-align:center;border-bottom:none;margin-bottom:12px;">
     {t.home.instagramTitle}
@@ -270,9 +355,46 @@ const latestVideo = latestVideos[0] ?? null;
 
   <p>{t.home.instagramText}</p>
 
-  <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" class="btn-red">
+  <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" rel="noopener noreferrer" class="btn-red">
     {t.home.followOnInstagram}
   </a>
-</div>
+</div><script>
+  const newsletterForm = document.getElementById("newsletter-form");
+  const newsletterFeedback = document.getElementById("newsletter-feedback");
 
+  newsletterForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    newsletterFeedback.textContent = "Subscribing...";
+    newsletterFeedback.className = "form-feedback";
+
+    const formData = new FormData(newsletterForm);
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        newsletterFeedback.innerHTML = `
+          📩 Check your email to confirm your subscription.<br>
+          <span style="font-size:1.3rem;color:#888;">
+            If you don’t see the email, please check your spam folder.
+          </span>
+        `;
+        newsletterFeedback.className = "form-feedback success";
+        newsletterForm.reset();
+      } else {
+        newsletterFeedback.textContent = data.error || "Something went wrong.";
+        newsletterFeedback.className = "form-feedback error";
+      }
+    } catch {
+      newsletterFeedback.textContent = "⚠ Unable to subscribe right now.";
+      newsletterFeedback.className = "form-feedback error";
+    }
+  });
+</script>
 </MainLayout>

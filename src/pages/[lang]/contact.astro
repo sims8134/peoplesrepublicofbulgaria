@@ -42,7 +42,7 @@ const copy = {
     fbText: "Facebook Page",
     errFields: "⚠ Please fill in all fields.",
     errEmail: "⚠ Please enter a valid email address.",
-    ok: "✓ Your email client is opening…",
+    ok: "✓ Message sent successfully!",
   },
   fr: {
     title: "Contact",
@@ -70,7 +70,7 @@ const copy = {
     fbText: "Page Facebook",
     errFields: "⚠ Veuillez remplir tous les champs.",
     errEmail: "⚠ Veuillez entrer une adresse email valide.",
-    ok: "✓ Votre logiciel email va s’ouvrir…",
+    ok: "✓ Message envoyé avec succès !",
   },
   es: {
     title: "Contacto",
@@ -98,7 +98,7 @@ const copy = {
     fbText: "Página de Facebook",
     errFields: "⚠ Por favor, completa todos los campos.",
     errEmail: "⚠ Por favor, introduce un email válido.",
-    ok: "✓ Tu cliente de correo se está abriendo…",
+    ok: "✓ ¡Mensaje enviado con éxito!",
   },
   bg: {
     title: "Контакт",
@@ -126,7 +126,7 @@ const copy = {
     fbText: "Facebook страница",
     errFields: "⚠ Моля, попълнете всички полета.",
     errEmail: "⚠ Моля, въведете валиден имейл адрес.",
-    ok: "✓ Вашият имейл клиент се отваря…",
+    ok: "✓ Съобщението беше изпратено успешно!",
   },
 }[lang];
 ---
@@ -366,39 +366,44 @@ const copy = {
   <h1 class="page-title">{copy.title}</h1>
   <p class="page-subtitle">{copy.subtitle}</p>
 
-  <div class="form-card">
-    <h3>{copy.sendMessage}</h3>
+<div class="form-card">
+  <h3>{copy.sendMessage}</h3>
+
+  <form action="/api/contact" method="POST" id="prb-contact-form">
+    <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off" />
 
     <div class="form-group">
       <label for="name">{copy.name}</label>
-      <input type="text" id="name" placeholder={copy.yourName} />
+      <input type="text" id="name" name="name" placeholder={copy.yourName} required />
     </div>
 
     <div class="form-group">
       <label for="email">{copy.email}</label>
-      <input type="email" id="email" placeholder={copy.yourEmail} />
+      <input type="email" id="email" name="email" placeholder={copy.yourEmail} required />
     </div>
 
     <div class="form-group">
       <label for="subject">{copy.subject}</label>
-      <select id="subject">
+      <select id="subject" name="subject" required>
         <option value="">{copy.selectSubject}</option>
-        <option>{copy.s1}</option>
-        <option>{copy.s2}</option>
-        <option>{copy.s3}</option>
-        <option>{copy.s4}</option>
-        <option>{copy.s5}</option>
+        <option value={copy.s1}>{copy.s1}</option>
+        <option value={copy.s2}>{copy.s2}</option>
+        <option value={copy.s3}>{copy.s3}</option>
+        <option value={copy.s4}>{copy.s4}</option>
+        <option value={copy.s5}>{copy.s5}</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="message">{copy.message}</label>
-      <textarea id="message" rows="6" placeholder={copy.yourMessage}></textarea>
+      <textarea id="message" name="message" rows="6" placeholder={copy.yourMessage} required></textarea>
     </div>
 
-    <button id="sendBtn">{copy.send}</button>
-    <div id="form-feedback" class="form-feedback"></div>
-  </div>
+    <button type="submit">{copy.send}</button>
+  </form>
+
+  <div id="form-feedback" class="form-feedback"></div>
+</div>
 
   <div class="contact-card">
     <div class="icon">✉️</div>
@@ -412,7 +417,7 @@ const copy = {
   <div class="socials-card">
     <h3>{copy.follow}</h3>
     <div class="social-list">
-      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" class="social-item">
+      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" rel="noopener noreferrer" class="social-item">
         <img src="/png/instagram.webp" alt="Instagram" />
         <div>
           <strong>@peoplesrepublicofbulgaria</strong>
@@ -420,7 +425,7 @@ const copy = {
         </div>
       </a>
 
-      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank" class="social-item">
+      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank" rel="noopener noreferrer" class="social-item">
         <img src="/png/Youtube_logo.png" alt="YouTube" />
         <div>
           <strong>@PeoplesRepublicOfBulgaria1505</strong>
@@ -428,7 +433,7 @@ const copy = {
         </div>
       </a>
 
-      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank" class="social-item">
+      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank" rel="noopener noreferrer" class="social-item">
         <img src="/png/facebook.png" alt="Facebook" />
         <div>
           <strong>People's Republic Of Bulgaria</strong>
@@ -440,36 +445,38 @@ const copy = {
 </div>
 
 <script define:vars={{ copy }}>
-  function sendForm() {
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value.trim();
-    const fb = document.getElementById('form-feedback');
+  const form = document.getElementById("prb-contact-form");
+  const feedback = document.getElementById("form-feedback");
 
-    if (!name || !email || !subject || !message) {
-      fb.textContent = copy.errFields;
-      fb.className = 'form-feedback error';
-      return;
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    feedback.textContent = "Sending...";
+    feedback.className = "form-feedback";
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        feedback.textContent = copy.ok;
+        feedback.className = "form-feedback success";
+        form.reset();
+      } else {
+        feedback.textContent = data.error || "Something went wrong.";
+        feedback.className = "form-feedback error";
+      }
+    } catch {
+      feedback.textContent = "⚠ Unable to send message.";
+      feedback.className = "form-feedback error";
     }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      fb.textContent = copy.errEmail;
-      fb.className = 'form-feedback error';
-      return;
-    }
-
-    const mailto =
-      `mailto:contact@peoplesrepublicofbulgaria.com`
-      + `?subject=${encodeURIComponent('[PRB] ' + subject + ' — ' + name)}`
-      + `&body=${encodeURIComponent('Name: ' + name + '\\nEmail: ' + email + '\\n\\n' + message)}`;
-
-    window.location.href = mailto;
-    fb.textContent = copy.ok;
-    fb.className = 'form-feedback success';
-  }
-
-  document.getElementById('sendBtn')?.addEventListener('click', sendForm);
+  });
 </script>
 
 </MainLayout>

@@ -502,14 +502,14 @@ const categories = await Promise.all(
               <div class="player-links">
                 <a
                   href={`https://www.youtube.com/watch?v=${cat.featured.videoId}`}
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   class="btn-red"
                 >
                   ▶ {copy.watch}
                 </a>
                 <a
                   href={`https://www.youtube.com/playlist?list=${cat.playlistId}`}
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   class="btn-outline"
                 >
                   ☰ {copy.playlist}
@@ -581,7 +581,7 @@ const categories = await Promise.all(
     <p>{copy.subscribeText}</p>
     <a
       href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505"
-      target="_blank"
+      target="_blank" rel="noopener noreferrer"
       class="btn-white"
     >
       ▶ {copy.subscribeBtn}

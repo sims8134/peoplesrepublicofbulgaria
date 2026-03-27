@@ -25,7 +25,6 @@ const heroStyle = heroImage
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <!-- SEO Multilingual -->
   <link rel="alternate" hreflang="en" href="https://peoplesrepublicofbulgaria.com/en/" />
   <link rel="alternate" hreflang="fr" href="https://peoplesrepublicofbulgaria.com/fr/" />
   <link rel="alternate" hreflang="es" href="https://peoplesrepublicofbulgaria.com/es/" />
@@ -249,14 +248,17 @@ const heroStyle = heroImage
 <div class="site-header" style={heroStyle}>
   <div class="header-top">
     <div class="header-social">
-      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank">
+      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank" rel="noopener noreferrer">
         <img src="/png/facebook.png" alt="Facebook" />
       </a>
-      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank">
+      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" rel="noopener noreferrer">
         <img src="/png/instagram.webp" alt="Instagram" />
       </a>
-      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank">
+      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank" rel="noopener noreferrer">
         <img src="/png/Youtube_logo.png" alt="YouTube" />
+      </a>
+      <a href="https://www.tiktok.com/@peoplesrepublicof70" target="_blank" rel="noopener noreferrer">
+        <img src="/png/Tiktok_icon.png" alt="TikTok" />
       </a>
     </div>
 
@@ -299,14 +301,17 @@ const heroStyle = heroImage
 
   <footer>
     <div class="footer-social">
-      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank">
+      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank" rel="noopener noreferrer">
         <img src="/png/facebook.png" alt="Facebook" />
       </a>
-      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank">
+      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" rel="noopener noreferrer">
         <img src="/png/instagram.webp" alt="Instagram" />
       </a>
-      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank">
+      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank" rel="noopener noreferrer">
         <img src="/png/Youtube_logo.png" alt="YouTube" />
+      </a>
+      <a href="https://www.tiktok.com/@peoplesrepublicof70" target="_blank" rel="noopener noreferrer">
+        <img src="/png/Tiktok_icon.png" alt="TikTok" />
       </a>
     </div>
 
@@ -316,7 +321,7 @@ const heroStyle = heroImage
       ))}
     </div>
 
-    <p>{footer.copyright}</p>
+    <p id="copyright-text">{footer.copyright}</p>
   </footer>
 </body>
 <script>
@@ -328,5 +333,10 @@ const heroStyle = heroImage
       }
     });
   });
+
+  const copyrightEl = document.getElementById("copyright-text");
+  if (copyrightEl) {
+    copyrightEl.textContent = copyrightEl.textContent.replace("2024", new Date().getFullYear());
+  }
 </script>
 </html>

@@ -101,9 +101,9 @@
 
   <div class="topbar">
     <div class="topbar-social">
-      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank"><img src="png/facebook.png" alt="Facebook" /></a>
-      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank"><img src="png/instagram.webp" alt="Instagram" /></a>
-      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank"><img src="png/Youtube_logo.png" alt="YouTube" /></a>
+      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank" rel="noopener noreferrer"><img src="png/facebook.png" alt="Facebook" /></a>
+      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" rel="noopener noreferrer"><img src="png/instagram.webp" alt="Instagram" /></a>
+      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank" rel="noopener noreferrer"><img src="png/Youtube_logo.png" alt="YouTube" /></a>
     </div>
     <div class="topbar-lang">
       <a href="contact.html" class="active"><img src="png/ukFlag.png" alt="EN" /></a>
@@ -135,34 +135,44 @@
     <p class="page-subtitle">A question? A request? A suggestion? Don't hesitate to get in touch!</p>
 
     <!-- FORM -->
-    <div class="form-card">
-      <h3>Send a message</h3>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Your name" />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="your@email.com" />
-      </div>
-      <div class="form-group">
-        <label for="subject">Subject</label>
-        <select id="subject">
-          <option value="">— Select a subject —</option>
-          <option>Collection</option>
-          <option>Tourism / Private visit</option>
-          <option>Store</option>
-          <option>Partnership / Press</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" rows="6" placeholder="Your message..."></textarea>
-      </div>
-      <button onclick="sendForm()">Send message</button>
-      <div id="form-feedback" class="form-feedback"></div>
+   <div class="form-card">
+  <h3>Send a message</h3>
+  
+  <form action="/api/contact" method="POST" id="prb-contact-form">
+    
+    <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required />
     </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="your@email.com" required />
+    </div>
+
+    <div class="form-group">
+      <label for="subject">Subject</label>
+      <select id="subject" name="subject" required>
+        <option value="">— Select a subject —</option>
+        <option value="Collection">Collection</option>
+        <option value="Tourism / Private visit">Tourism / Private visit</option>
+        <option value="Partnership / Press">Partnership / Press</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" placeholder="Your message..." required></textarea>
+    </div>
+
+    <button type="submit">Send message</button>
+  </form>
+
+  <div id="form-feedback" class="form-feedback"></div>
+</div>
 
     <div class="contact-card">
       <div class="icon">✉️</div>
@@ -174,17 +184,21 @@
     <div class="socials-card">
       <h3>Follow us</h3>
       <div class="social-list">
-        <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" class="social-item">
+        <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" rel="noopener noreferrer" class="social-item">
           <img src="png/instagram.webp" alt="Instagram" />
           <div><strong>@peoplesrepublicofbulgaria</strong><span>Instagram — Photos, collection, urbex</span></div>
         </a>
-        <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank" class="social-item">
+        <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank" rel="noopener noreferrer" class="social-item">
           <img src="png/Youtube_logo.png" alt="YouTube" />
           <div><strong>@PeoplesRepublicOfBulgaria1505</strong><span>YouTube — video, urbex, vlogs, edits</span></div>
         </a>
-        <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank" class="social-item">
+        <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank" rel="noopener noreferrer" class="social-item">
           <img src="png/facebook.png" alt="Facebook" />
           <div><strong>People's Republic Of Bulgaria</strong><span>Facebook Page</span></div>
+        </a>
+        <a href="https://www.tiktok.com/@peoplesrepublicof70" target="_blank" rel="noopener noreferrer" class="social-item">
+          <img src="png/Tiktok_icon.png" alt="TikTok" />
+          <div><strong>People's Republic Of Bulgaria</strong><span>TikTok</span></div>
         </a>
       </div>
     </div>
@@ -192,9 +206,9 @@
 
   <footer>
     <div class="footer-social">
-      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank"><img src="png/facebook.png" alt="Facebook" /></a>
-      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank"><img src="png/instagram.webp" alt="Instagram" /></a>
-      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank"><img src="png/Youtube_logo.png" alt="YouTube" /></a>
+      <a href="https://www.facebook.com/PeoplesRepublicOfBulgaria/" target="_blank" rel="noopener noreferrer"><img src="png/facebook.png" alt="Facebook" /></a>
+      <a href="https://www.instagram.com/peoplesrepublicofbulgaria/" target="_blank" rel="noopener noreferrer"><img src="png/instagram.webp" alt="Instagram" /></a>
+      <a href="https://www.youtube.com/@PeoplesRepublicOfBulgaria1505" target="_blank" rel="noopener noreferrer"><img src="png/Youtube_logo.png" alt="YouTube" /></a>
     </div>
     <div class="footer-nav">
       <a href="contact.html">Contact</a>
@@ -205,32 +219,38 @@
   </footer>
 
   <script>
-    function sendForm() {
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const subject = document.getElementById('subject').value;
-      const message = document.getElementById('message').value.trim();
-      const fb = document.getElementById('form-feedback');
+const form = document.getElementById("prb-contact-form");
+const feedback = document.getElementById("form-feedback");
 
-      if (!name || !email || !subject || !message) {
-        fb.textContent = '⚠ Please fill in all fields.';
-        fb.className = 'form-feedback error';
-        return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        fb.textContent = '⚠ Please enter a valid email address.';
-        fb.className = 'form-feedback error';
-        return;
-      }
+form?.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      const mailto = `mailto:contact@peoplesrepublicofbulgaria.com`
-        + `?subject=${encodeURIComponent('[PRB] ' + subject + ' — ' + name)}`
-        + `&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
+  feedback.textContent = "Sending...";
+  feedback.className = "form-feedback";
 
-      window.location.href = mailto;
-      fb.textContent = '✓ Your email client is opening…';
-      fb.className = 'form-feedback success';
+  const formData = new FormData(form);
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      feedback.textContent = "✓ Message sent successfully, Comrade!";
+      feedback.className = "form-feedback success";
+      form.reset();
+    } else {
+      feedback.textContent = data.error || "Something went wrong.";
+      feedback.className = "form-feedback error";
     }
-  </script>
+  } catch {
+    feedback.textContent = "⚠ Unable to send message.";
+    feedback.className = "form-feedback error";
+  }
+});
+</script>
 </body>
 </html>
